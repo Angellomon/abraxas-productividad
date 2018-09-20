@@ -1,0 +1,51 @@
+:root {
+    --fondo-1: #fecee9;
+    --fondo-2: #03254e;
+    --texto-1: #011c27;
+    --texto-2: #eb9fef;
+    --fondo-3: #545677;
+}
+html, body {
+    color: var(--texto-1)!important;
+    background-color: var(--fondo-1)!important;
+    font-family: 'Muli', sans-serif!important;
+    height: 100%;
+}
+nav {
+    background-color: var(--fondo-2);
+}
+.card-body {
+    background-color: var(--fondo-1);
+    border-top-right-radius: 10px;
+}
+.container {
+    background-color: var(--fondo-3);
+    border-bottom-left-radius: 1em;
+    border-bottom-right-radius: 1em;
+    overflow: hidden;
+    /* padding-bottom: 1em!important; */
+}
+.fill {
+    flex: 1!important;
+}
+.display-4 {
+    color: var(--fondo-3)!important;
+}
+.dropdown-menu, .dropdown-item {
+    color: var(--texto-2)!important;
+    background-color: var(--fondo-2)!important;
+}
+.is-countdown {
+    height: 4em!important;
+    margin-bottom: 15px!important;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.jumbotron {
+    background-color: var(--texto-2)!important;
+    padding-top: 32px!important;
+    padding-bottom: 31px!important;
+}
+.nav-link, .navbar-brand {
+    color: var(--texto-2)!important;
+}

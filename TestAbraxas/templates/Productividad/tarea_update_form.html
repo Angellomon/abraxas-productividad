@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block titulo %}
+<title>Modificar tarea</title>
+{% endblock titulo %}
+
+{% block contenido %}
+<div class="jumbotron">
+    <h1 class="display-4">Actualizar Tarea</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input class="btn btn-primary" type="submit" value="Actualizar">
+    </form>
+</div>
+{% endblock contenido %}

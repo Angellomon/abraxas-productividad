@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+<title>Inicio</title>
+{% endblock titulo %}
+
+{% block contenido %}
+<!-- <div data-countdown="+1h +10m +5s"></div>
+<div data-countdown="+0h +30m +30s"></div> -->
+{% if tareas %}
+    <div class="jumbotron">
+        <h1 class="display-4">Tareas activas:</h1>
+        {% for tarea in tareas %}   
+        {% if not tarea.completado %}
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a type="button" class="btn btn-info" href="{% url 'Productividad:actualizar' pk=tarea.pk %}">{{ tarea }}</a>
+            <button type="button" id="completar" alt="{{ tarea.pk }}" class="btn btn-primary">Completar</button>
+            <button type="button" id="pausa" alt="{{ tarea.pk }}" class="btn btn-secondary">Pausar</button>
+            <button type="button" id="reiniciar" alt="{{ tarea.pk }}" class="btn btn-warning">Reiniciar</button>
+            <a href="{% url 'Productividad:eliminar_t' pk=tarea.pk %}" type="button" class="btn btn-danger">Eliminar</a>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ tarea.descripcion }}</p>
+        </div>
+        <div class="tiempo" id="{{ tarea.pk }}" data-countdown="+{{ tarea.h_actual }}h +{{ tarea.m_actual }}m +{{ tarea.s_actual }}s"></div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="jumbotron">
+        <h1 class="display-4">Tareas completadas:</h1>
+        {% for tarea in tareas %}
+        {% if tarea.completado %}
+        <div class="btn-group" role="group" aria-label="Acciones">
+            <button type="button" class="btn btn-info">{{ tarea }}</button>
+            <a href="{% url 'Productividad:eliminar_t' pk=tarea.pk %}" type="button" class="btn btn-danger">Eliminar</a>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{ tarea.descripcion }}</p>
+        </div>
+        <div class="completado" id="{{ tarea.pk }}" data-countdown="+{{ tarea.h_actual }}h +{{ tarea.m_actual }}m +{{ tarea.s_actual }}s"></div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        $('[data-countdown]').each(function() {
+            var $this = $(this), finalDate = $(this).data('countdown');
+            $this.countdown({
+                until: finalDate,
+                onTick: minuto,
+                tickInterval: 30,
+            });
+        });
+        $('.btn-group').each(function() {
+            var $this = $(this);
+            $this.find('#pausa').click(function() {
+                var pause = $(this).text() === 'Pausar'; 
+                $(this).text(pause ? 'Continuar' : 'Pausar');
+                $('div#' + $(this).attr('alt')).countdown(pause ? 'pause' : 'resume'); 
+            });
+            $this.find('#completar').click(function() {
+                id = $(this).attr('alt');
+                $.ajax({
+                    url: "{% url 'Productividad:completar_t' %}",
+                    data: {
+                        'pk': id,
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        location.reload();
+                    }
+                });
+                $('div#' + id).countdown('pause');
+            });
+            $this.find('#reiniciar').click(function() {
+                id = $(this).attr('alt');
+                $.ajax({
+                    url: "{% url 'Productividad:obtener_t' %}",
+                    data: {
+                        'pk': id,
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        var finalDate = "+" + data.tiempos[0] + "h +" + data.tiempos[1] + "m +" + data.tiempos[2] + "s";
+                        console.log(finalDate);
+                        $('div#' + id).countdown('destroy');
+                        $('div#' + id).countdown({
+                            until: finalDate,
+                            onTick: minuto,
+                            tickInterval: 30,
+                        });
+                    }
+                });
+            });
+        });
+        $('.completado').countdown('pause');
+        function minuto() {
+            try {
+                console.log('paso un minuto.');
+                let $tiempos = $('.tiempo');
+                for(tiempo of $tiempos) {
+                    pk = tiempo.id
+                    t = tiempo.getElementsByClassName('countdown-section');
+                    var t1 = [t[0].textContent.match(/\d+/g).map(Number)[0], t[1].textContent.match(/\d+/g).map(Number)[0], t[2].textContent.match(/\d+/g).map(Number)[0]];
+                    $.ajax({
+                        url: "{% url 'Productividad:actualizar_t' %}",
+                        data: {
+                            'pk': pk,
+                            'tiempos[]': t1,
+                        },
+                        dataType: 'json',
+                    });
+                }
+            }
+            catch(err) {}
+        } 
+         
+        /*let $tiempos = $('.tiempo');
+        for(tiempo of $tiempos) {
+            t = tiempo.find('countdown-section');
+            for(let el of t) {
+                console.log(el.textContent, tiempo.id);
+            }
+        }*/
+        
+    </script>
+{% else %}
+<hr>
+<p>no hay tareas por el momento</p>
+{% endif %}
+{% endblock contenido %}

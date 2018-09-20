@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+<title>Eliminar tarea</title>
+{% endblock titulo %}
+
+{% block contenido %}
+<form method="post">{% csrf_token %}
+    <p>Seguro que quieres eliminar "{{ tarea.nombre }}"?</p>
+    <input class="btn btn-primary"  type="submit" value="Confirmar">
+</form>
+{% endblock contenido %}
