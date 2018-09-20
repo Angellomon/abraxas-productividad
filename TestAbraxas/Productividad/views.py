@@ -1,10 +1,13 @@
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView
 from django.views.generic.edit import FormView
 from django.urls import reverse
 from .forms import FormTarea
 from .models import Tarea
+
+class VistaInicio1(TemplateView):
+    template_name = 'inicio.html'
 
 class VistaInicio(ListView):
     template_name = 'Productividad/index.html'
@@ -121,4 +124,3 @@ def eliminar_tarea(request):
         'exito': True,
     }
     return JsonResponse(data)
-

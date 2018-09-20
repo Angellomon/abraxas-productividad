@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+<title>Inicio</title>
+{% endblock titulo %}
+
+{% block contenido %}
+<div class="jumbotron">
+    <h1 class="display-4">Aplicación de productividad</h1>
+    <p class="lead">Para acceder a ella, haz click en el siguiente botón.</p>
+    <a href="{% url 'Productividad:indice' %}" type="button" class="btn btn-primary">Acceder</a>
+</div>
+{% endblock contenido %}
