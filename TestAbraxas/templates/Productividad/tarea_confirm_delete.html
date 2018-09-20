@@ -5,8 +5,11 @@
 {% endblock titulo %}
 
 {% block contenido %}
-<form method="post">{% csrf_token %}
-    <p>Seguro que quieres eliminar "{{ tarea.nombre }}"?</p>
-    <input class="btn btn-primary"  type="submit" value="Confirmar">
-</form>
+<div class="jumbotron">
+    <form method="post">{% csrf_token %}
+        <h1 class="display-4">Seguro que quieres eliminar "{{ tarea.nombre }}"?</h1>
+        <input class="btn btn-primary"  type="submit" value="Confirmar">
+    </form>
+</div>
+
 {% endblock contenido %}

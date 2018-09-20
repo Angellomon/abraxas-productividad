@@ -44,7 +44,8 @@ nav {
 .jumbotron {
     background-color: var(--texto-2)!important;
     padding-top: 32px!important;
-    padding-bottom: 31px!important;
+    padding-bottom: 32px!important;
+    margin-top: 10px;
 }
 .nav-link, .navbar-brand {
     color: var(--texto-2)!important;
