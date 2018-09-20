@@ -26,7 +26,7 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = 'o$vubx_e#(ol8e5e@lky=3j8b008^$@6)6=04t1^%%b0e3o)j7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', 'enigmatic-brook-27841.herokuapp.com/']
 
